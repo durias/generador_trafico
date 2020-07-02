@@ -1,0 +1,30 @@
+[
+    {
+        "Edad": 66,
+        "Contagio": "Comunitario",
+        "Departamento": "Departamento 2",
+        "Nombre": "Nombre 9996",
+        "Estado": "Activo"
+    },
+    {
+        "Edad": 89,
+        "Contagio": "Comunitario",
+        "Departamento": "Departamento 6",
+        "Nombre": "Nombre 9997",
+        "Estado": "Activo"
+    },
+    {
+        "Edad": 63,
+        "Contagio": "Comunitario",
+        "Departamento": "Departamento 2",
+        "Nombre": "Nombre 9998",
+        "Estado": "Fallecido"
+    },
+    {
+        "Edad": 68,
+        "Contagio": "Comunitario",
+        "Departamento": "Departamento 8",
+        "Nombre": "Nombre 9999",
+        "Estado": "Activo"
+    }
+]
