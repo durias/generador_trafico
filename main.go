@@ -107,38 +107,26 @@ func get_array_casos(ruta string) []Caso {
 func iniciar_concurrencia(total int, hilos int, arreglo []Caso) {
 
 	var longitud_archivo int
-	var longitud_envio_normal int
-	var longitud_envio_residual int
-	var longitud_paquete int
 	var contador int
-	var residuo int
-
 	contador = 0
 	longitud_archivo = len(arreglo)
-	residuo = total % hilos
-	longitud_envio_normal = total / hilos
-	longitud_envio_residual = longitud_envio_normal + residuo
 
 	fmt.Printf("Longitud del archivo: %v ... \n", longitud_archivo)
-	fmt.Printf("Longitud del envio: %v ... \n", longitud_envio_normal)
+	fmt.Printf("Datos por hilo: %v ... \n", total)
 
 	for cont_hilos := 0; cont_hilos < hilos; cont_hilos++ {
 		var pack_jsons []Caso
-		longitud_paquete = longitud_envio_normal
-		if cont_hilos == 0 && residuo > 0 {
-			longitud_paquete = longitud_envio_residual
-		}
-		for i := 0; i < longitud_paquete; i++ {
+		for i := 0; i < total; i++ {
 			if contador >= longitud_archivo {
 				contador = 0
 			}
-			pack_jsons = append(pack_jsons, arreglo[i])
+			pack_jsons = append(pack_jsons, arreglo[contador])
+			//fmt.Printf("%d\n", contador)
 			contador += 1
 		}
 		// llamada al metodo enviar paquete en una nueva rutina
 		go enviar_paquete(pack_jsons)
 	}
-
 }
 
 func enviar_paquete(arreglo []Caso) {
@@ -155,7 +143,8 @@ func enviarCaso(caso Caso) {
 
 	clienteHttp := &http.Client{}
 	// Url del servidor
-	url := "http://localhost:8080"
+	//url := "http://34.68.15.208:3001"
+	url := "http://localhost:3001"
 
 	StructComoJson, err := json.Marshal(caso) //Se convierte el struct a json
 	if err != nil {

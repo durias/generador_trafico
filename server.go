@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-//var cont int
+var cont int
 
 type Caso struct {
 	Edad         int
@@ -36,13 +36,15 @@ func recibirPost(w http.ResponseWriter, r *http.Request) {
 
 	json_cadena = "{" + "\"Edad\":" + strconv.Itoa(info.Edad) + "," + "\"Contagio\":\"" + info.Contagio + "\"," + "\"Departamento\":\"" + info.Departamento + "\"," + "\"Nombre\":\"" + info.Nombre + "\"," + "\"Estado\":\"" + info.Estado + "\"" + "}"
 	fmt.Fprintf(w, "Recibi caso: %+v", json_cadena) //Enviar respuesta al cliente
-	fmt.Printf("%v \n", json_cadena)                //Imprimir en la consola del server
+	//fmt.Printf("%v \n", json_cadena)                //Imprimir en la consola del server
+	cont++
+	fmt.Printf("%d\n", cont)
 }
 
 func main() {
 	http.HandleFunc("/", recibirPost)
 	fmt.Printf("Starting server for testing HTTP POST...\n")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(":3001", nil); err != nil {
 		log.Fatal(err)
 	}
 }
