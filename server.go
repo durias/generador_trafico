@@ -7,6 +7,8 @@ import (
 	"net/http"
 )
 
+var cont int
+
 type Caso struct {
 	Edad         int
 	Contagio     string
@@ -16,6 +18,7 @@ type Caso struct {
 }
 
 func recibirPost(w http.ResponseWriter, r *http.Request) {
+
 	// Variable para guardar la info de entrada
 	var info Caso
 
@@ -29,6 +32,9 @@ func recibirPost(w http.ResponseWriter, r *http.Request) {
 	/*Si la ejecucion llega a esta linea es que el struct llego bien y se puede usar
 	Para lo que sea necesario */
 	fmt.Fprintf(w, "Recibi caso: %+v", info)
+
+	cont++
+	fmt.Printf("%v \n", cont)
 }
 
 func main() {
