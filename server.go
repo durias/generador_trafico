@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
-var cont int
+//var cont int
 
 type Caso struct {
 	Edad         int
@@ -21,6 +22,7 @@ func recibirPost(w http.ResponseWriter, r *http.Request) {
 
 	// Variable para guardar la info de entrada
 	var info Caso
+	var json_cadena string
 
 	// Aqui decodifica la info para convertirla en Json, si no funciona da error xd
 	err := json.NewDecoder(r.Body).Decode(&info)
@@ -31,10 +33,10 @@ func recibirPost(w http.ResponseWriter, r *http.Request) {
 
 	/*Si la ejecucion llega a esta linea es que el struct llego bien y se puede usar
 	Para lo que sea necesario */
-	fmt.Fprintf(w, "Recibi caso: %+v", info)
 
-	cont++
-	fmt.Printf("%v \n", cont)
+	json_cadena = "{" + "\"Edad\":" + strconv.Itoa(info.Edad) + "," + "\"Contagio\":\"" + info.Contagio + "\"," + "\"Departamento\":\"" + info.Departamento + "\"," + "\"Nombre\":\"" + info.Nombre + "\"," + "\"Estado\":\"" + info.Estado + "\"" + "}"
+	fmt.Fprintf(w, "Recibi caso: %+v", json_cadena) //Enviar respuesta al cliente
+	fmt.Printf("%v \n", json_cadena)                //Imprimir en la consola del server
 }
 
 func main() {
