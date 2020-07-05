@@ -19,6 +19,8 @@ import (
 	"os"
 )
 
+var balanceador string
+
 type Caso struct {
 	Edad         int
 	Contagio     string
@@ -66,6 +68,13 @@ func main() {
 	}
 
 	for {
+		fmt.Print("Escriba la url del balanceador: ")
+		fmt.Scanf("%s\n", &balanceador)
+
+		break
+	}
+
+	for {
 		fmt.Print("Escriba la url del archivo: ")
 		fmt.Scanf("%s\n", &path)
 		fmt.Printf("Intentando leer datos desde la ruta: %s ... \n", path)
@@ -79,7 +88,7 @@ func main() {
 		break
 	}
 
-	fmt.Println("Información completada con éxito, presione ENTER para iniciar concurrencia.")
+	fmt.Println("Informacion completada con exito, presione ENTER para iniciar concurrencia.")
 	fmt.Scanln()
 	iniciar_concurrencia(total_datos, total_hilos, array_casos)
 	fmt.Println("\nCasos enviados con exito presione ENTER para salir.")
@@ -144,7 +153,7 @@ func enviarCaso(caso Caso) {
 	clienteHttp := &http.Client{}
 	// Url del servidor
 	//url := "http://34.68.15.208:3001"
-	url := "http://localhost:3001"
+	url := balanceador
 
 	StructComoJson, err := json.Marshal(caso) //Se convierte el struct a json
 	if err != nil {
@@ -153,12 +162,12 @@ func enviarCaso(caso Caso) {
 	//Se hace la peticion Post
 	peticion, err := http.NewRequest("POST", url, bytes.NewBuffer(StructComoJson))
 	if err != nil {
-		log.Fatalf("Error creando petición: %v", err)
+		log.Fatalf("Error creando peticion: %v", err)
 	}
 
 	respuesta, err := clienteHttp.Do(peticion)
 	if err != nil {
-		log.Fatalf("Error haciendo petición: %v", err)
+		log.Fatalf("Error haciendo peticion: %v", err)
 	}
 	defer respuesta.Body.Close()
 
